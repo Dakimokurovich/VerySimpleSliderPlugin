@@ -32,6 +32,7 @@ class verySimpleSlider {
         this.addSliderTrack();
         this.defaultValues();
         this.defaultStyles();
+        this.setSliderWidthAndHeight();
         this.calcSliderTrackStep();
 
 
@@ -208,11 +209,12 @@ class verySimpleSlider {
         let remainderOfItems = 
             items - (this.numOfItems % items);
 
-
+        console.log(isInteger % 2);
         if (
                 !stepItemsAll || 
                 items === this.numOfItems || 
-                isInteger % 2 === 0
+                isInteger % 2 === 0 ||
+                isInteger % 2 === 1
             ) 
         {
             return;
@@ -328,7 +330,6 @@ class verySimpleSlider {
         }else {
             this.sliderTrackPos -= this.sliderTrackStep;
             this.sliderTrackAnim(this.sliderTrackPos);
-            
         }
         // this.oddParityAdjustment('right');
     }
@@ -400,9 +401,10 @@ const slider = new verySimpleSlider(
     '#slider',
     {
         // activateSliderWhen: 1400,    
-        items: 3,
+        items: 4,
+        itemsGap: 15,
         btnRight: '.btn .right',
         btnLeft: '.btn .left',
-        stepItemsAll: true,
+        stepItemsAll: true
     }
 );
