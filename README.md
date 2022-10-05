@@ -35,8 +35,8 @@ const slider = new verySimpleSlider(
         animTime: 500, // -> ANIMATION TIME IN MILLISECOND
         autoScroll: false, // -> true
         autoScrollTime: 3000, // -> AUTI SCROLL TIME IN MILLISECOND
-        stopAutoScrollWhenMouseOnElement: '#slider' // -> false
-        activateSliderWhen: false // -> activate slider at screen resolution = "takes a number, indicate in pixels"
+        stopAutoScrollWhenMouseOnElement: '#slider', // -> false
+        activateSliderWhen: false, // -> activate slider at screen resolution = "takes a number, indicate in pixels"
         responsive: { // -> if you need to change the number of "items" depending on the screen resolution
             1000: { // -> equal to or less than this value in pixels
                 items: 1 // -> number of visible items
