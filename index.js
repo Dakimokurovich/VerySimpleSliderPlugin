@@ -5,12 +5,14 @@ class verySimpleSlider {
     )
     {
         this.initialization(slider, options);
-        this.start();
     }
 
     initialization(slider, options) {
-        this.isActiveSlider = false;
         this.slider = document.querySelector(slider);
+        if (this.slider === null) {
+            return;
+        }
+        this.isActiveSlider = false;
         this.selector = slider;
         this.sliderChildren = document.querySelector(slider).children;
         this.sliderItems = [...this.sliderChildren];
@@ -21,13 +23,16 @@ class verySimpleSlider {
         this.sliderTrack = null;
         this.sliderTrackPos = 0;
         this.sliderTrackStep = null;
+        this.initialItems = this.options.items;
         this.counter = 0;
         this.numOfItems = this.sliderItems.length;
+        this.start();
     }
 
     start() {
         this.resize();
         this.IsActive();
+        this.responsive();
 
         this.addSliderTrack();
         this.defaultValues();
@@ -45,6 +50,7 @@ class verySimpleSlider {
 
         window.addEventListener('resize', () => {
             this.IsActive();
+            this.responsive();
 
             this.setSliderWidthAndHeight();
         
@@ -134,7 +140,6 @@ class verySimpleSlider {
                 this.options[key] = defaultValues[key];
             }  
         }
-
     //  console.log(this.options);
     }
 
@@ -144,6 +149,7 @@ class verySimpleSlider {
         let centerEl = 
         (this.sliderWidth - 
         (this.sliderWidth - itemsGap)) / 2;
+        
 
         function calcTrtransition() {
             let styleTransition;
@@ -180,7 +186,7 @@ class verySimpleSlider {
         this.sliderWidth = 
             this.sliderItems[0].offsetWidth * 
             items +
-            itemsGap * items - 1;
+            itemsGap * items;
 
         this.sliderHeight = this.sliderItems[0].offsetHeight;
 
@@ -209,7 +215,7 @@ class verySimpleSlider {
         let remainderOfItems = 
             items - (this.numOfItems % items);
 
-        console.log(isInteger % 2);
+        // console.log(isInteger % 2);
         if (
                 !stepItemsAll || 
                 items === this.numOfItems || 
@@ -392,6 +398,24 @@ class verySimpleSlider {
         }
     }
 
+    responsive() {
+        let screenWidth = document.documentElement.clientWidth;
+
+        const {responsive} = this.options;
+
+        if (this.initialItems === undefined) {
+            this.initialItems = 1;
+        }
+
+        for(let key in responsive) {
+            if (screenWidth <= key) {
+                this.options.items = responsive[key].items;
+                return;
+            }else if (screenWidth > key) {
+                this.options.items = this.initialItems;
+            }
+        }   
+    }
 }
 
 
@@ -405,6 +429,16 @@ const slider = new verySimpleSlider(
         itemsGap: 15,
         btnRight: '.btn .right',
         btnLeft: '.btn .left',
-        stepItemsAll: true
+        stepItemsAll: true,
+        responsive: {
+            1000: {
+                items: 1
+            },
+
+            1200: {
+                items: 2
+            }
+            
+        }
     }
 );
